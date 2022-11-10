@@ -21,33 +21,42 @@ export default function RangeSlider({
   const [maxValue, setMaxValue] = useState(initMax);
   const progressRef = useRef<HTMLDivElement>(null);
 
+  // Input Handler
   const handleMinInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setMinValue(Number(e.target.value));
+    const value = Number(e.target.value);
+
+    if (value <= maxValue - priceCap) {
+      setMinValue(value);
+    } else {
+      setMinValue(maxValue - priceCap);
+    }
   };
 
+  // Input Handler
   const handleMaxInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setMaxValue(Number(e.target.value));
+    const value = Number(e.target.value);
+    if (value >= max) {
+      setMaxValue(max);
+    } else if (value >= minValue + priceCap) {
+      setMaxValue(value);
+    } else {
+      setMaxValue(minValue + priceCap);
+    }
   };
 
+  // Range Handler
   const handleMinRange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (maxValue - minValue >= priceCap && maxValue <= max) {
       if (Number(event.target.value) <= maxValue - priceCap) {
         setMinValue(Number(event.target.value));
       }
-    } else {
-      if (Number(event.target.value) <= minValue) {
-        setMinValue(Number(event.target.value));
-      }
     }
   };
 
+  // Range Handler
   const handleMaxRange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (maxValue - minValue >= priceCap && minValue >= min) {
       if (Number(event.target.value) >= minValue + priceCap) {
-        setMaxValue(Number(event.target.value));
-      }
-    } else {
-      if (Number(event.target.value) >= maxValue) {
         setMaxValue(Number(event.target.value));
       }
     }
