@@ -3,9 +3,16 @@
 @tailwind utilities;
 
 @layer base {
+  * {
+    font-family: 'Pretendard Variable', Pretendard, -apple-system,
+      BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI',
+      'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic',
+      'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+  }
+
   /* Price Range */
   input[type='range']::-webkit-slider-thumb {
     /* -webkit-appearance: none; */
-    @apply pointer-events-auto h-4 w-4 cursor-grab appearance-none rounded-full bg-purple-800 active:cursor-grabbing;
+    @apply pointer-events-auto h-4 w-4 cursor-grab appearance-none rounded-full bg-slate-800 active:cursor-grabbing;
   }
 }

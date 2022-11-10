@@ -46,41 +46,38 @@ export default function RangeSlider({
 
   // Range Handler
   const handleMinRange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (maxValue - minValue >= priceCap && maxValue <= max) {
-      if (Number(event.target.value) <= maxValue - priceCap) {
-        setMinValue(Number(event.target.value));
-      }
+    if (Number(event.target.value) <= maxValue - priceCap) {
+      setMinValue(Number(event.target.value));
     }
   };
 
   // Range Handler
   const handleMaxRange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (maxValue - minValue >= priceCap && minValue >= min) {
-      if (Number(event.target.value) >= minValue + priceCap) {
-        setMaxValue(Number(event.target.value));
-      }
+    if (Number(event.target.value) >= minValue + priceCap) {
+      setMaxValue(Number(event.target.value));
     }
   };
 
   useEffect(() => {
+    //? [aria-label="progress"]의 width를 조절하는 방식으로 progress bar를 구현
     if (!progressRef.current) return;
     progressRef.current.style.left = (minValue / max) * step + '%';
     progressRef.current.style.right = step - (maxValue / max) * step + '%';
   }, [minValue, maxValue, max, step]);
 
   return (
-    <div className="w-11/12 max-w-sm space-y-4 rounded-lg bg-slate-200 px-6 py-8 shadow-lg">
+    <div className="w-11/12 max-w-sm space-y-8 rounded-lg bg-slate-200 px-8 py-12 shadow-lg">
       <header>
-        <h1 className="text-2xl font-bold">가격 범위 슬라이더</h1>
-        <p className="py-2 text-sm">원하는 가격 범위를 설정하세요.</p>
+        <h1 className="text-3xl font-bold">가격 범위 슬라이더</h1>
+        <p className="py-2 text-lg">원하는 가격 범위를 설정하세요.</p>
       </header>
 
-      <div className="flex items-center justify-between">
+      <div
+        aria-label="Price Inputs"
+        className="flex items-center justify-between"
+      >
         <div className="flex items-center space-x-2">
-          <label
-            htmlFor="min-price"
-            className="flex-shrink-0 text-sm font-bold"
-          >
+          <label htmlFor="min-price" className="flex-shrink-0  font-bold">
             최소
           </label>
           <input
@@ -95,16 +92,13 @@ export default function RangeSlider({
           />
         </div>
 
-        <div className="mx-4 flex select-none items-center justify-center text-2xl font-bold">
+        <div className="mx-4 flex select-none items-center justify-center text-2xl font-semibold">
           {' '}
           -{' '}
         </div>
 
         <div className="flex items-center space-x-2">
-          <label
-            htmlFor="max-price"
-            className="flex-shrink-0 text-sm font-bold"
-          >
+          <label htmlFor="max-price" className="flex-shrink-0 font-bold">
             최대
           </label>
           <input
@@ -123,12 +117,12 @@ export default function RangeSlider({
       <div>
         <div
           aria-label="slider"
-          className="relative h-1 rounded-full bg-slate-300"
+          className="relative h-1 rounded-full bg-slate-300 "
         >
           <div
             aria-label="progress"
             ref={progressRef}
-            className="absolute  h-1 rounded-md bg-purple-500"
+            className="absolute h-1 rounded-md bg-slate-500 "
           ></div>
         </div>
 
@@ -141,7 +135,7 @@ export default function RangeSlider({
             max={max}
             value={minValue}
             onChange={handleMinRange}
-            className="pointer-events-none absolute -top-1 h-1 w-full appearance-none bg-transparent"
+            className="pointer-events-none absolute -top-1 h-1 w-full appearance-none bg-transparent outline-none"
           />
           <input
             aria-label="max-price"
@@ -151,7 +145,7 @@ export default function RangeSlider({
             max={max}
             value={maxValue}
             onChange={handleMaxRange}
-            className="pointer-events-none absolute -top-1 h-1 w-full appearance-none bg-transparent"
+            className="pointer-events-none absolute -top-1 h-1 w-full appearance-none bg-transparent outline-none"
           />
         </div>
       </div>
